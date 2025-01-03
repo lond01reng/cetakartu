@@ -1,6 +1,5 @@
 <?= $this->extend('template/temp') ?>
 <?= $this->section('css') ?>
-<!-- <link rel="stylesheet" href="<?= base_url()?>dist/select2/css/select2.min.css"> -->
 <?= $this->endSection() ?> 
 
 <?= $this->extend('template/temp') ?>
@@ -26,9 +25,6 @@
         <div class="row">
           <div class="col-md-12 table-responsive">
           <?php
-
-        // var_dump(session()->getFlashdata());
-      
       ?>
       
       <?php if (! empty(session()->getFlashdata('errors'))): ?>
@@ -137,7 +133,6 @@
 
 <?= $this->extend('template/temp') ?>
 <?= $this->section('js') ?>
-<!-- <script src="<?= base_url()?>plugins/select2/js/select2.full.min.js"></script> -->
 <?php if(session()->get('level')==='sup'): ?>
 <script>
   $(document).ready(function () {

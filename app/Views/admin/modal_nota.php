@@ -13,7 +13,6 @@
             <?= form_open(base_url('admin/simpan_nota'));?>
               <table class="table table-sm table-borderless">
                 <tr><td>Sekolah</td><td>
-                    <!-- <input type="text" name="sch_id" class="custom-file-input"> -->
                     <select class="custom-select" id="sch_npsn"  name="sch_id">
                         <option value="">--Pilih Sekolah--</option>
                     <?php

@@ -1,6 +1,5 @@
 <?= $this->extend('template/temp') ?>
 <?= $this->section('css') ?>
-<!-- <link rel="stylesheet" href="<?= base_url()?>dist/select2/css/select2.min.css"> -->
 <?= $this->endSection() ?> 
 
 <?= $this->extend('template/temp') ?>
@@ -67,16 +66,10 @@
                 </td>
                 <td>
                 <?php
-                // $filePath = FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg';
-
-                // if (file_exists($filePath)) {
-                //   echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg" style="height:50px">';
-                // } 
                 
               if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg')) {
                   echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg" style="height:50px">';
               } 
-              // Jika tidak ada, cek untuk file dengan ekstensi .png
               else if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.png')) {
                   echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.png" style="height:50px">';
               }
@@ -108,7 +101,6 @@
 
 <?= $this->extend('template/temp') ?>
 <?= $this->section('js') ?>
-<!-- <script src="<?= base_url()?>plugins/select2/js/select2.full.min.js"></script> -->
 <?php if(session()->get('level')==='sup'): ?> 
 <script>
   $(document).ready(function () {

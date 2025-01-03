@@ -30,10 +30,9 @@
 </div>
 
 <script>
-    // Menangkap perubahan pada input file
     $('.custom-file-input').on('change', function () {
-        var fileName = $(this).val().split('\\').pop(); // Mengambil nama file dari path lengkap
+        var fileName = $(this).val().split('\\').pop(); 
         var label = $(this).next('.custom-file-label');
-        label.html(fileName); // Menampilkan nama file di label
+        label.html(fileName); 
     });
 </script>
