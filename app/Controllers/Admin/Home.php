@@ -27,13 +27,8 @@ class Home extends BaseController
         foreach ($data['notas'] as $nota) {
             $ctAngg = $this->anggota->where('ag_nota', $nota->nt_id)->countAllResults();
             $data['ct_agg'][$nota->nt_id] = $ctAngg;
-            // $data['jurs'][$nota->nt_id] = $this->anggota->getJurusan($nota->nt_id);
             $data['jurs'][$nota->nt_id] = $this->anggota->getJurusan($nota->nt_id);
-            // echo ($this->anggota->getLastQuery());
         }
-        // $data=[];'jurs'  => $this->anggota->getJurusan(),
-
-        // print_r($data);
         return view('admin/home', $data);
     }
     public function mTambahNota()
@@ -46,9 +41,10 @@ class Home extends BaseController
     {
         $sch_id = $this->request->getPost('sch_id');
         $ks_name = $this->request->getPost('ks_name');
+        $ks_nip = $this->request->getPost('ks_nip');
         $tgl_ttd = $this->request->getPost('tgl_ttd');
         $tmpl = $this->request->getPost('tmpl');
-        $data=['nt_sch'=>$sch_id,'nt_ks'=>$ks_name,'nt_tgl'=>$tgl_ttd, 'nt_tmpl'=>$tmpl];
+        $data=['nt_sch'=>$sch_id,'nt_ks'=>$ks_name,'nt_nip'=>$ks_nip,'nt_tgl'=>$tgl_ttd, 'nt_tmpl'=>$tmpl];
         if(!$this->validate([
             'sch_id'=>[
                 'rules'=>'required|regex_match[/^[0-9]{8}$/]',
@@ -62,6 +58,13 @@ class Home extends BaseController
                 'errors'=>[
                     'required'=>'Nama Kepala Sekolah belum diisi',
                     'regex_match'=>'Penulisan Kepala Sekolah salah'
+                ]
+            ],
+            'ks_nip'=>[
+                'rules'=>'required|regex_match[/^[0-9]{1,18}$/]',
+                'errors'=>[
+                    'required'=>'NIP Kepala Sekolah belum diisi',
+                    'regex_match'=>'Penulisan NIP salah'
                 ]
             ],
             'tgl_ttd'=>[

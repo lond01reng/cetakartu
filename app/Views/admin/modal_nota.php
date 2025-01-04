@@ -24,6 +24,7 @@
                     </td>
                 </tr>
                 <tr><td>Kepala Sekolah</td><td><input type="text" name="ks_name" class="form-control"></td></tr>
+                <tr><td>NIP</td><td><input type="text" name="ks_nip" class="form-control"></td></tr>
                 <tr><td>Tanggal</td><td><input type="date" name="tgl_ttd" class="form-control"></td></tr>
                 <tr><td>Template</td><td><input type="text" name="tmpl" class="form-control"></td></tr>
               </table>
