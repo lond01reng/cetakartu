@@ -13,7 +13,8 @@
           </div>
           <div class="col-sm-6">
             <?php if(session()->get('level')==='sup'):?>
-            <button type="button" class="btn btn-sm btn-primary float-right" id="modalAnggota"><i class="fas fa-plus-circle"></i> Tambah Anggota</button>
+            <button type="button" class="btn btn-sm btn-primary float-right" id="modalAnggota"><i class="fas fa-plus-circle"></i> Tambah Anggota</button>  
+            <a href="<?= base_url('admin/download_anggota/'.$nt)?>" class="btn btn-sm btn-success float-right mr-3"><i class="far fa-file-excel"></i> Download Data</a>
             <?php endif;?>
           </div>
         </div>

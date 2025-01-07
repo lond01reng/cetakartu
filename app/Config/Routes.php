@@ -21,6 +21,7 @@ $routes->group('admin',['filter'=>'cekadmin'], static function($routes){
   $routes->post('simpan_anggota/(:num)', 'Admin\Anggota::simpan_anggota/$1');
   $routes->get('upload_foto', 'Admin\Anggota::upload_foto');
   $routes->post('simpan_foto/(:num)/(:num)', 'Admin\Anggota::simpan_foto/$1/$2');
+  $routes->get('download_anggota/(:num)', 'Admin\Anggota::dlAnggota/$1');
 
   // $routes->get('cetak_kartu/(:num)', 'Admin\Cetakkartu::generatePdf/$1');
   // $routes->get('cetak_kartu/(:num)/(:num)', 'Admin\Cetakkartu::generatePdf/$1/$2');

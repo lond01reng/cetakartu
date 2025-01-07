@@ -108,7 +108,6 @@ class Anggota extends BaseController
     $file=$this->request->getFile('foto');
     $xtipe=$file->getExtension();
     $nama = $nisn . '.'.$xtipe; 
-    // $nama = $nisn . '.jpg'; 
 
     $valRule=[
       'foto' => 'uploaded[foto]|max_size[foto,3072]|ext_in[foto,jpg,png]',
@@ -125,17 +124,15 @@ class Anggota extends BaseController
       session()->setFlashdata('errors', $this->validator->getErrors());
       return redirect()->back();
     }else{
-      // $file=$this->request->getFile('foto');
       if($file->isValid()&&!$file->hasMoved()){
         $filefoto=FCPATH.'uploads/'.$nota.'/'.$nama;
         if (file_exists($filefoto)) {
-          unlink($filefoto); // Menghapus file yang lama
+          unlink($filefoto); 
         }
         $file->move($path,$nama);
            
         $this->resize_foto($filefoto);
         session()->setFlashdata('success', 'Foto berhasil diupload.');
-        // return redirect()->back();
         return redirect()->to(base_url('admin/daftar_anggota/').$nota.'#'.$nisn);
       }
       session()->setFlashdata('errors', ['foto' => 'Terjadi kesalahan saat mengupload foto.']);
@@ -154,4 +151,37 @@ class Anggota extends BaseController
     $image->save($filefoto);
 
   }
+  public function dlAnggota($nota){
+    $data=$this->angg->getAnggota($nota);
+    header('Content-Type: text/csv, charset=utf-8');
+    header('Content-Disposition: attachment; filename="DataAnggota_'.$nota.'.csv"');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    $judul = array('NISN','Nama','Nama Pendek','No Induk','Jurusan','Tgl Lahir','Tempat Lahir','Bapak','RT','RW','Dusun','Desa','Kec','Kab','Kelas');
+    $output = fopen('php://output', 'w');
+    fputcsv($output,$judul,';');
+    foreach ($data as $row) {
+      $csv_row=array(
+        strval($row->ag_nisn),
+        $row->ag_nick,
+        $row->ag_nama,
+        $row->ag_induk,
+        $row->ag_jurusan,
+        (string)date('Y-m-d', strtotime($row->ag_tgl)),
+        $row->ag_tempat,
+        $row->ag_bapak,
+        $row->ag_rt,
+        $row->ag_rw,
+        $row->ag_dusun,
+        $row->ag_desa,
+        $row->ag_kec,
+        $row->ag_kab,
+        $row->ag_klas
+      );
+      fputcsv($output,$csv_row,';');
+    }
+    fclose($output);
+    exit;
+  }
+    
 }
