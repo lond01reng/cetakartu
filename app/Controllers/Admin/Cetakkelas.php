@@ -79,7 +79,7 @@ class Cetakkelas extends BaseController
             $prodi=$dt->ag_jurusan;
             $tgll=$dt->ag_tgl=='0000-00-00'?$dt->ag_tgl:date_id(date('Y-m-d', strtotime($dt->ag_tgl)));
             $lahir=$dt->ag_tempat.', '.$tgll;
-            $ortu='Ortu '.$dt->ag_bapak;
+            $ortu=$dt->ag_bapak;
             $alamat1='RT '.$dt->ag_rt.' RW '.$dt->ag_rw.' '.$dt->ag_dusun.' Desa '.$dt->ag_desa;
             $alamat2='Kec '.$dt->ag_kec.', '.$dt->ag_kab;
             $sekolah=$nt->sch_nama;
