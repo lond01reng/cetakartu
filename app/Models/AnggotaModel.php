@@ -43,7 +43,12 @@ class AnggotaModel extends Model
         $this->orderBy('ag_klas', 'ASC');
         $this->orderBy('ag_nama', 'ASC');
         $this->where('ag_nota',$nota);
-        return $this->find();
+        // return $this->find();
+        return $this->withDeleted()->find();
+    }
+    public function getNisn($nisn){
+        $this->where('ag_nisn',$nisn);
+        return $this->withDeleted()->first();
     }
     public function getJurusan($nota)
     {
@@ -53,7 +58,6 @@ class AnggotaModel extends Model
         $this->orderBy('ag_jurusan','ASC');
         return $this->find();
     }
-
 
     public function ctAgg($nota)
     {
@@ -67,16 +71,16 @@ class AnggotaModel extends Model
         $data['ag_nota'] = $nota;
         $this->save($data, $existingRecord);
     }
+    public function updateBio($nisn, $data){
+        return $this->update(['ag_nisn' => $nisn],$data);
+    }
     public function cetakAnggota($nota=null, $jur=null)
     {
-        // $tetap=50;
-        // $pg=$page*$tetap-1;
         $jurs=str_replace('-',' ',$jur);
         $this->orderBy('ag_jurusan','ASC');
         $this->orderBy('ag_nama', 'ASC');
         $this->where('ag_nota',$nota);
         $this->where('ag_jurusan', $jurs);
-        // $this->limit($tetap,$pg<0?0:$pg);
         return $this->find();
     }
     public function cetakPribadi($nota=null, $nisn=null)

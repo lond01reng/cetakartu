@@ -28,9 +28,9 @@
           <?php if (! empty(session()->getFlashdata('errors'))): ?>
             <?php $errors= session()->getFlashdata('errors'); ?>
               <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                Input Gagal!!! 
+                Input Gagal!!! <br>
                   <?php foreach ($errors as $error): ?>
-                      <?= esc($error) ?>
+                      <?= esc($error).'<br>' ?>
                   <?php endforeach ?>
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -60,21 +60,33 @@
             </thead>
             <tbody>
               <?php foreach($anggota as $agg): ?>
-                <tr id="<?=$agg->ag_nisn; ?>"><td>
+              <?php 
+              if(empty($agg->ag_dl)){
+                $actk= 'href="'.base_url('admin/cetak_pribadi/'.$agg->ag_nota.'/'.$agg->ag_nisn.'/2').'"  target="_blank"';
+                $apdf= 'href="'.base_url('admin/cetak_pribadi/'.$agg->ag_nota.'/'.$agg->ag_nisn.'/1').'" target="_blank"';
+                $opac=1;
+              }else{
+                $actk='href="#"';
+                $apdf='href="#"';
+                $opac=0.2;
+              }
+              ?>
+              <tr id="<?=$agg->ag_nisn; ?>" style="opacity:<?= $opac; ?>">
+                <td>
                   <?=$agg->ag_nisn; ?><br>
-                  <a href="<?=base_url('admin/cetak_pribadi/'.$agg->ag_nota.'/'.$agg->ag_nisn.'/2')?>" target="_blank"><i class="fas fa-file-pdf mx-3"></i></a> 
-                  <a href="<?=base_url('admin/cetak_pribadi/'.$agg->ag_nota.'/'.$agg->ag_nisn.'/1')?>" target="_blank"><i class="fas fa-print"></i></a>
+                  <i class="fas fa-user-edit text-info modalEdit" data-id="<?=$agg->ag_nisn;?>"></i>
+                  <a <?=$actk;?>><i class="fas fa-file-pdf mx-2"></i></a>
+                  <a <?=$apdf;?>><i class="fas fa-print"></i></a>
                 </td>
                 <td>
                 <?php
-                
-              if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg')) {
-                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg" style="height:50px">';
-              } 
-              else if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.png')) {
+                if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg')) {
+                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg" style="height:50px;">';
+                } 
+                else if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.png')) {
                   echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.png" style="height:50px">';
-              }
-              else {
+                }
+                else {
                   if(session()->get('level')==='sup'){
                     echo '<button type="button" class="btn btn-sm btn-primary modalFoto" data-id="'.$agg->ag_nisn.'"  data-label="'.$agg->ag_nama.'"><i class="fas fa-plus-circle"></i> </button>';
                   }
@@ -138,6 +150,30 @@
             alert('Gagal memuat konten modal.');
         }
       });
+    });
+  });
+
+  $(document).ready(function () {
+    $(document).on('click','.modalEdit',function () {
+      var id = $(this).data('id');  
+      var label = $(this).data('label');  
+      $('#edModal').remove();
+      $.ajax({
+        url: '<?= base_url('admin/edit_biodata/'); ?>'+id,
+        type: 'GET',
+        success: function (data) {
+            $('body').append(data);
+            // $('#bio_id').text('NISN '+id);
+
+            $('#edModal').modal('show');
+        },
+        error: function () {
+            alert('Gagal memuat konten modal.');
+        }
+      });
+    });
+    $('#edModal').on('hidden.bs.modal', function () {
+      $(this).remove();
     });
   });
 

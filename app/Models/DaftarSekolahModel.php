@@ -10,16 +10,16 @@ class DaftarSekolahModel extends Model
     protected $primaryKey       = 'sch_npsn';
     // protected $useAutoIncrement = true;
     protected $returnType       = 'object';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [];
 
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'sch_cr';
+    protected $updatedField  = 'sch_up';
+    protected $deletedField  = 'sch_dl';
 
     // // Validation
     // protected $validationRules      = [];

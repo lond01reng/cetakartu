@@ -93,12 +93,119 @@ class Anggota extends BaseController
     $this->angg->simpan_csv($rowData, $nota);
   }
 
+  public function edit_bio($nisn)
+  {
+    $data=$this->angg->getNisn($nisn);
+    return view('admin/modal_edit', ['data' => $data]);
+  }
+
+  public function simpan_bio($nisn){
+    $valRule=[
+      'bio_nama'=>'required|alpha_space|min_length[3]|max_length[100]',
+      'bio_tempat'=>'required|alpha_space|min_length[3]|max_length[24]',
+      'bio_tgl'=>'required|valid_date',
+      'bio_bapak'=>'required|alpha_space|min_length[3]|max_length[100]',
+      'bio_rt'=>'required|numeric|max_length[2]',
+      'bio_rw'=>'required|numeric|max_length[2]',
+      'bio_dusun'=>'required|alpha_space|min_length[3]|max_length[24]',
+      'bio_desa'=>'required|alpha_space|min_length[3]|max_length[24]',
+      'bio_kec'=>'required|alpha_space|min_length[3]|max_length[24]',
+    ];
+    $valError=[
+      'bio_nama'=>[
+        'required'=> 'Nama Wajib Diisi',
+        'alpha_space' => 'Karakter Nama yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 24 karakter'
+      ],
+      'bio_tempat'=>[
+        'required'=> 'Tempat Lahir Wajib Diisi',
+        'alpha_space' => 'Karakter Tempat Lahir yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 100 karakter'
+        ],
+      'bio_tgl'=>[
+        'required'=>'Tanggal Lahir Wajib Diisi',
+        'valid_date'=> 'Format tanggal "yyyy-mm-dd"'
+      ],
+      'bio_bapak'=>[
+        'required'=> 'Nama Bapak Wajib Diisi',
+        'alpha_space' => 'Karakter Nama Bapak yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 100 karakter'
+      ],
+      'bio_rt'=>[
+        'required'=>'RT Wajib Diisi',
+        'numeric'=>'RT Hanya angka yang boleh digunakan',
+        'max_length'=> 'Maksimal 2'
+      ],
+      'bio_rw'=>[
+        'required'=>'RW Wajib Diisi',
+        'numeric'=>'RW Hanya angka yang boleh digunakan',
+        'max_length'=> 'Maksimal 2'
+      ],
+      'bio_dusun'=>[
+        'required'=> 'Dusun Wajib Diisi',
+        'alpha_space' => 'Karakter Dusun yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 24 karakter'
+        ],
+      'bio_desa'=>[
+        'required'=> 'Desa Wajib Diisi',
+        'alpha_space' => 'Karakter Desa yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 24 karakter'
+        ],
+      'bio_kec'=>[
+        'required'=> 'Kecamatan Wajib Diisi',
+        'alpha_space' => 'Karakter Kecamatan yang diperbolehkan hanya huruf',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 24 karakter'
+        ],
+    ];
+    if(!$this->validate($valRule,$valError)){
+      $data=$this->angg->getNisn($nisn);
+      session()->setFlashdata('errors', $this->validator->getErrors());
+      return redirect()->back();
+    }else{
+      $ag_nama = $this->request->getPost('bio_nama');
+      $ag_tempat=$this->request->getPost('bio_tempat');
+      $ag_tgl=$this->request->getPost('bio_tgl');
+      $ag_bapak=$this->request->getPost('bio_bapak');
+      $ag_rt=$this->request->getPost('bio_rt');
+      $ag_rw=$this->request->getPost('bio_rw');
+      $ag_dusun=$this->request->getPost('bio_dusun');
+      $ag_desa=$this->request->getPost('bio_desa');
+      $ag_kec=$this->request->getPost('bio_kec');
+      $check=$this->request->getPost('bio_dl');
+      if(isset($check)){
+        $ag_dl=NULL;
+      }else{
+        $ag_dl=date('Y-m-d H:i:s');
+      }
+      $data=[
+        'ag_nama'=>$ag_nama,
+        'ag_tempat'=>$ag_tempat,
+        'ag_tgl'=>$ag_tgl,
+        'ag_bapak'=>$ag_bapak,
+        'ag_rt'=>$ag_rt,
+        'ag_rw'=>$ag_rw,
+        'ag_dusun'=>$ag_dusun,
+        'ag_desa'=>$ag_desa,
+        'ag_kec'=>$ag_kec,
+        'ag_dl'=>$ag_dl
+      ];
+      $this->angg->updateBio($nisn,$data);
+      return redirect()->back();
+    }
+  }
   public function upload_foto()
   {
     $data=[
     ];
     return view('admin/modal_foto', $data);
   }
+
   public function simpan_foto($nota,$nisn) {
     $path= ROOTPATH. 'public/uploads/'.$nota;
     if (!is_dir($path)) {
