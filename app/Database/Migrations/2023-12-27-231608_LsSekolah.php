@@ -22,6 +22,12 @@ class LsSekolah extends Migration
                 'type'           => 'VARCHAR',
 				'constraint'     => '128',
             ]
+            'sch_cr DATETIME DEFAULT CURRENT_TIMESTAMP',
+            'sch_up DATETIME DEFAULT CURRENT_TIMESTAMP  on update current_timestamp',
+            'sch_dl' => [
+                'type'           => 'DATETIME',
+                'null'           => true,
+            ]
         ]);
         $this->forge->addKey('sch_npsn', TRUE);
         $this->forge->createTable('ls_sekolah', TRUE);

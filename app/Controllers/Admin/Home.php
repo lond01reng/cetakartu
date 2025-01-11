@@ -106,8 +106,8 @@ class Home extends BaseController
 
         $valRules = [
             'stamp' => 'uploaded[stamp]|max_size[stamp,1024]|mime_in[stamp,image/png]',
-            'bg1' => 'uploaded[bg1]|max_size[bg1,1024]|mime_in[bg1,image/png]',
-            'bg2' => 'uploaded[bg2]|max_size[bg2,1024]|mime_in[bg2,image/png]',
+            'bg1' => 'uploaded[bg1]|max_size[bg1,1024]|ext_in[bg1,jpg,png]',
+            'bg2' => 'uploaded[bg2]|max_size[bg2,1024]|ext_in[bg2,jpg,png]',
         ];
 
         $valError = [
@@ -119,12 +119,12 @@ class Home extends BaseController
             'bg1' => [
                 'uploaded' => 'Harap pilih file background depan.',
                 'max_size' => 'Ukuran file background depan tidak boleh melebihi 1 MB.',
-                'mime_in' => 'Format file background depan harus berupa png.'
+                'mime_in' => 'Format file background depan harus berupa jpg atau png.'
             ],
             'bg2' => [
                 'uploaded' => 'Harap pilih file background belakang.',
                 'max_size' => 'Ukuran file background belakang tidak boleh melebihi 1 MB.',
-                'mime_in' => 'Format file background belakang harus berupa png.'
+                'mime_in' => 'Format file background belakang harus berupa jpg atau png.'
             ],
         ];
 

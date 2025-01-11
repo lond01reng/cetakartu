@@ -26,10 +26,12 @@ class Nota extends Migration
                 'null'           => true,
             ]
         ]);
+        $this->forge->addKey('nt_id', TRUE);
+        $this->forge->createTable('nota', TRUE);
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('nota');
     }
 }
