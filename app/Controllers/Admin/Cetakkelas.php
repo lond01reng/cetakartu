@@ -189,6 +189,8 @@ class Cetakkelas extends BaseController
         }
         elseif(file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.png')){
             $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.png');
+        }else{
+            $foto='';
         }
         $nisn=$dt->ag_nisn;
         $nama=strtoupper($dt->ag_nama);
@@ -395,6 +397,87 @@ class Cetakkelas extends BaseController
             'padding' => '2',
             'fgcolor' => array(0,0,0),
             'bgcolor' => array(255,255,255), 
+            'module_width' => 1, 
+            'module_height' => 1 
+        );
+        $rilis=$tgl=='0000-00-00'?$tgl:date_id(date('Y-m-d', strtotime($tgl)));
+        $pdf=$this->pdf;
+        $ytext=$row*$boxh+14+$mt;
+        $xdt1=31;
+        $xdt2=$xdt1+7;
+        //cardL
+        $pdf->SetFont('Arial', 'B', 12);
+        $fontaw=14;
+        for ($i = 0; $i < 10; $i++) {
+            $fontaw -= 0.5;
+            $pdf->SetFont('Arial', 'B', $fontaw);
+            $lbnama= $pdf->GetStringWidth($nama);
+            $lebarnm = $pdf->GetStringWidth($nama);
+            if($lebarnm<78){ //76
+                break;
+            }
+        }
+        $pdf->SetTextColor(0,0,0);
+        $pdf->Text(12,$ytext,($nama)); 
+        
+        $pdf->SetFont('Arial', 'B', 7);
+        $pdf->Text(12,$ytext+5.5,'NIS. '.$nis.', '.$prodi);
+        $pdf->SetFont('Arial', '', 7);
+        $pdf->Text($xdt1,$ytext+9,$lahir);
+        $pdf->Text($xdt1,$ytext+12,$alamat1);
+        $pdf->Text($xdt1,$ytext+15,$alamat2);
+        $pdf->Text($xdt1,$ytext+19,'Pacitan, '.$rilis);
+        $pdf->Text($xdt1,$ytext+21.5,'Kepala '.$sekolah);
+        $pdf->SetFont('Arial', 'B', 7.5);
+        $pdf->Text($xdt1, $ytext+31.5,$ks);
+        if(!empty($nip)){
+            $pdf->SetFont('Arial', '', 6.5);
+            $pdf->Text($xdt1, $ytext+34,'NIP. '.$nip);
+        }
+        $pdf->Image($foto,$ml+9,$row*$boxh+24+$mt,18,24); //foto
+        $pdf->Image($ttd,$ml+23,$row*$boxh+36.5+$mt,0,12); //ttd
+        $pdf->SetFont('Arial', '', 6);
+        $pdf->SetXY($ml+9,$row*$boxh+46+$mt);
+        $pdf->SetFillColor(8,77,189);
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Rect($ml+9.5,$row*$boxh+47.5+$mt,17,2,'F');
+        $pdf->Cell(18,5,$nisn, 0, 0, 'C');
+        $pdf->SetTextColor(0,0,0);
+        $pdf->SetFont('Arial', 'I', 6);
+        $pdf->Text($ml+8,$ytext+36.5,'Berlaku selama menjadi siswa di '.$sekolah);
+        $pdf->write2DBarcode($nisn, 'QRCODE,H', $boxw-20, $row*$boxh+34.5+$mt, 15, 15, $qrsty, 'N');
+        $pdf->SetXY(76,$row*$boxh+49+$mt);
+        $pdf->SetFont('Arial', 'B', 8);
+        $pdf->Cell(15,5,'', 0, 0, 'C');
+        //cardL
+        // ======================================
+        //cardR
+        $pdf->SetTextColor(0,0,0);
+        $pdf->StartTransform();
+        $pdf->Rotate(-90);
+        $pdf->Image($bg2,$ml+38.5,$row*$boxh-51.25+$mt,$bgh); //bg
+        $pdf->Image($foto,45,$row*$boxh-36.25+$mt,39,48.6, '', '', '', false, 300, '', false, false, 0, false, false, false); //foto
+        $pdf->SetDrawColor(0);
+
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->SetXY(37.5,$row*$boxh+14+$mt);
+        $pdf->Cell($bgh-4,5,$nisn, 0, 1, 'C');
+        $pdf->SetTextColor(255,255,255);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetXY(39,$row*$boxh+22+$mt);
+        $pdf->Cell($bgh-4,5,strtoupper($nick), 0, 1, 'C');
+
+        $pdf->StopTransform();
+        $pdf->SetLineWidth(0.1);
+        //cardR
+    }
+
+    private function k_bkt($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
+        $qrsty = array(
+            'border' => 2,
+            'padding' => '2',
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => array(255,255,255), 
             'module_width' => 1, // width of a single module in points
             'module_height' => 1 // height of a single module in points
         );
@@ -405,12 +488,6 @@ class Cetakkelas extends BaseController
         $xdt2=$xdt1+7;
         //cardL
         $pdf->SetFont('Arial', 'B', 12);
-        // $pdf->setXY($ml,$mt+4);
-        // // $pdf->Text($ml+10,$ytext-9,'SMK NEGERI 2 PACITAN');
-        // // $pdf->Cell($boxw,3,'SMK NEGERI 2 PACITAN', 0, 1, 'C');
-        // $pdf->SetFont('Arial', '', 7);
-        // $pdf->Cell($boxw,3,'Jalan Walanda Maramis No. 2 Telp/Fax (0357) 881078', 0, 0, 'C');
-        // $pdf->Line ($ml+17,$mt+13,$ml+80, $mt+13);
         $fontaw=14;
         for ($i = 0; $i < 10; $i++) {
             $fontaw -= 0.5;
@@ -478,5 +555,6 @@ class Cetakkelas extends BaseController
         $pdf->SetLineWidth(0.1);
         //cardR
     }
+
 }
 
