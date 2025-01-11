@@ -21,7 +21,6 @@ class Cetakkelas extends BaseController
 
     public function generatePdf($nota = null, $jurs=null, $kls=null)
     {
-        // $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(200,300));
         $pdf=$this->pdf;
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('kang_didikw|k-dir');
@@ -35,7 +34,6 @@ class Cetakkelas extends BaseController
         $pdf->SetLineWidth(0.1);
         $pdf->AddPage();
 
-        //dfcard
         $boxw=96;
         $boxh=56;
         $bgw=87;
@@ -46,16 +44,6 @@ class Cetakkelas extends BaseController
         $bg2 = base_url('uploads/'.$nota.'/bg2_'.$nota.'.jpg');
         $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
         $plong='';
-        //dfcard
-        //pdfStyle
-        // $qrsty = array(
-        //     'border' => 2,
-        //     'padding' => '2',
-        //     'fgcolor' => array(29,32,136),
-        //     'bgcolor' => array(255,255,255), 
-        //     'module_width' => 1, // width of a single module in points
-        //     'module_height' => 1 // height of a single module in points
-        // );
         $data=$this->angg->cetakKelas($nota, $jurs, $kls);
         
         $nt=$this->nota->getNota1($nota);
@@ -72,6 +60,8 @@ class Cetakkelas extends BaseController
             }
             elseif(file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.png')){
                 $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.png');
+            }else{
+                $foto='';
             }
             $nisn=$dt->ag_nisn;
             $nama=strtoupper($dt->ag_nama);
@@ -88,18 +78,14 @@ class Cetakkelas extends BaseController
             $tgl=$nt->nt_tgl;
             $nick=$dt->ag_nick;
 
-            // startL
-            
+            // startL       
             $pdf->Rect($ml,$row*$boxh+$mt,$boxw,$boxh,'D');//mal
             $pdf->Image($bg1,$ml+4.5,$row*$boxh+$mt+0.5,$bgw, $bgh); //bg
-            // $pdf->Image(base_url('uploads/bg1wm.jpg'),$ml+4.5,$row*$boxh+$mt+0.5,$bgw, $bgh); //bg watermark
-            $this->$tmpl($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong); //pilih template
-            // $pdf->Rect($ml+5,$row*$boxh+$mt+1,$bgw-1,$bgh-1,'D'); //batas potong kartu
+            $this->$tmpl($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong); //pilih template
             // endL
             // ==================================================================================
             // startR
             $pdf->Rect($ml+$boxw,$row*$boxh+$mt,$boxw,$boxh,'D');//Mal
-            // $pdf->Rect($ml+$boxw+5,$mt+1,$bgw-1,$bgh-1,'D'); //batas potong kartu
             // endR
             if(($row%5==4 AND $key<$ct-1)){
                 $pdf->AddPage();
@@ -146,7 +132,6 @@ class Cetakkelas extends BaseController
     }
     public function pribadiPdf($nota = null, $nisn=null, $ctk=null)
     {
-        // $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(200,300));
         $pdf=$this->pdf;
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('kang_didikw|k-dir');
@@ -170,20 +155,11 @@ class Cetakkelas extends BaseController
         $plong= base_url('uploads/id_plong.png');
         $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
 
-        // $qrsty = array(
-        //     'border' => 2,
-        //     'padding' => '2',
-        //     'fgcolor' => array(29,32,136),
-        //     'bgcolor' => array(255,255,255), //array(255,255,255)
-        //     'module_width' => 1, // width of a single module in points
-        //     'module_height' => 1 // height of a single module in points
-        // );
         $dt=$this->angg->cetakPribadi($nota, $nisn);
         $nt=$this->nota->getNota1($nota);
         $tmpl=$nt->nt_tmpl; //template
-        // $i=-1;
+
         $row=0;
-        // $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg');
         if (file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.jpg')) {
             $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg');
         }
@@ -208,7 +184,7 @@ class Cetakkelas extends BaseController
         $nick=$dt->ag_nick;
         // startL        
         $pdf->Image($bg1,$ml+4.5,$row*$boxh+$mt+0.5,$bgw, $bgh); //bg             
-        $this->$tmpl($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong);//ktp_id           
+        $this->$tmpl($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong);//ktp_id           
         if($ctk==1){
             $pdf->Rect($ml,$row*$boxh+$mt,$boxw,$boxh,'D');//mal
             $pdf->Rect($ml+$boxw,$row*$boxh+$mt,$boxw,$boxh,'D');//Mal
@@ -219,18 +195,13 @@ class Cetakkelas extends BaseController
         // endL
         // ==================================================================================
         // startR
-        // if($ctk==1){
-        //     $pdf->Rect($ml+$boxw,$row*$boxh+$mt,$boxw,$boxh,'D');//Mal
-        // }else{
-        //     $pdf->Image($plong,$ml+$boxw+4.5,$row*$boxh+$mt+0.5,$bgw, $bgh,'PNG'); //bgplong
-        // }
         // endR
         $tipe=$ctk==1?'Cetak_':'';
         $this->response->setContentType('application/pdf');
         $pdf->Output($tipe.$nama.'_'.$sekolah.'.pdf', 'I');
     }
 
-    private function ktp_id($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
+    private function ktp_id($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
         $qrsty = array(
             'border' => 2,
             'padding' => '2',
@@ -305,7 +276,7 @@ class Cetakkelas extends BaseController
         //cardR
     }
 
-    private function o_smk2($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
+    private function o_smk2($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
         $qrsty = array(
             'border' => 2,
             'padding' => '2',
@@ -391,7 +362,7 @@ class Cetakkelas extends BaseController
         //cardR
     }
 
-    private function p_smk2($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
+    private function p_smk2($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
         $qrsty = array(
             'border' => 2,
             'padding' => '2',
@@ -472,88 +443,40 @@ class Cetakkelas extends BaseController
         //cardR
     }
 
-    private function k_bkt($ml,$mt,$row,$boxh,$boxw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
-        $qrsty = array(
-            'border' => 2,
-            'padding' => '2',
-            'fgcolor' => array(0,0,0),
-            'bgcolor' => array(255,255,255), 
-            'module_width' => 1, // width of a single module in points
-            'module_height' => 1 // height of a single module in points
-        );
-        $rilis=$tgl=='0000-00-00'?$tgl:date_id(date('Y-m-d', strtotime($tgl)));
+    private function k_bkt($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){
+        // $rilis=$tgl=='0000-00-00'?$tgl:date_id(date('Y-m-d', strtotime($tgl)));
         $pdf=$this->pdf;
-        $ytext=$row*$boxh+14+$mt;
+        // $ytext=$row*$boxh+14+$mt;
         $xdt1=31;
         $xdt2=$xdt1+7;
         //cardL
         $pdf->SetFont('Arial', 'B', 12);
-        $fontaw=14;
+        $fontaw=12;
         for ($i = 0; $i < 10; $i++) {
             $fontaw -= 0.5;
             $pdf->SetFont('Arial', 'B', $fontaw);
             $lbnama= $pdf->GetStringWidth($nama);
             $lebarnm = $pdf->GetStringWidth($nama);
-            if($lebarnm<78){ //76
+            if($lebarnm<40){ //76
                 break;
             }
         }
-        $pdf->SetTextColor(0,0,0);
-        $pdf->Text(12,$ytext,($nama)); 
-        
-        $pdf->SetFont('Arial', 'B', 7);
-        $pdf->Text(12,$ytext+5.5,'NIS. '.$nis.', '.$prodi);
-        $pdf->SetFont('Arial', '', 7);
-        $pdf->Text($xdt1,$ytext+9,$lahir);
-        // $pdf->Text($xdt1,$ytext+12,'Ortu '.$ortu);
-        $pdf->Text($xdt1,$ytext+12,$alamat1);
-        $pdf->Text($xdt1,$ytext+15,$alamat2);
-        $pdf->Text($xdt1,$ytext+19,'Pacitan, '.$rilis);
-        $pdf->Text($xdt1,$ytext+21.5,'Kepala '.$sekolah);
-        $pdf->SetFont('Arial', 'B', 7.5);
-        $pdf->Text($xdt1, $ytext+31.5,$ks);
-        if(!empty($nip)){
-            $pdf->SetFont('Arial', '', 6.5);
-            $pdf->Text($xdt1, $ytext+34,'NIP. '.$nip);
-        }
-        $pdf->Image($foto,$ml+9,$row*$boxh+24+$mt,18,24); //foto
-        $pdf->Image($ttd,$ml+23,$row*$boxh+36.5+$mt,0,12); //ttd
-        $pdf->SetFont('Arial', '', 6);
-        $pdf->SetXY($ml+9,$row*$boxh+46+$mt);
-        $pdf->SetFillColor(8,77,189);
-        $pdf->SetTextColor(255,255,255);
-        $pdf->Rect($ml+9.5,$row*$boxh+47.5+$mt,17,2,'F');
-        $pdf->Cell(18,5,$nisn, 0, 0, 'C');
-        $pdf->SetTextColor(0,0,0);
-        $pdf->SetFont('Arial', 'I', 6);
-        $pdf->Text($ml+8,$ytext+36.5,'Berlaku selama menjadi siswa di '.$sekolah);
-        $pdf->write2DBarcode($nisn, 'QRCODE,H', $boxw-20, $row*$boxh+34.5+$mt, 15, 15, $qrsty, 'N');
-        $pdf->SetXY(76,$row*$boxh+49+$mt);
-        $pdf->SetFont('Arial', 'B', 8);
-        $pdf->Cell(15,5,'', 0, 0, 'C');
-        //cardL
-        // ======================================
-        //cardR
-        $pdf->SetTextColor(0,0,0);
+        $pdf->SetXY(33.3,$row*$boxh+$mt+6.7);
         $pdf->StartTransform();
         $pdf->Rotate(-90);
-        $pdf->Image($bg2,$ml+38.5,$row*$boxh-51.25+$mt,$bgh); //bg
-        // $pdf->SetLineWidth(0.8);
-        // $pdf->SetDrawColor(29,32,136);
-        $pdf->Image($foto,45,$row*$boxh-36.25+$mt,39,48.6, '', '', '', false, 300, '', false, false, 0, false, false, false); //foto
-        $pdf->SetDrawColor(0);
-
+        $pdf->SetTextColor(0,0,0);
+       
+        $pdf->Cell(42,6,$nama, 0, 1, 'C');
+        $pdf->SetXY(33.3, ($row * $boxh + $mt + 6.7) + 11.2);
         $pdf->SetFont('Arial', 'B', 11);
-        $pdf->SetXY(37.5,$row*$boxh+14+$mt);
-        $pdf->Cell($bgh-4,5,$nisn, 0, 1, 'C');
-        $pdf->SetTextColor(255,255,255);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->SetXY(39,$row*$boxh+22+$mt);
-        $pdf->Cell($bgh-4,5,strtoupper($nick), 0, 1, 'C');
-
+        $pdf->Cell(42,6,$nick, 0, 1, 'C');
+        // Left Start
+        // Left End 
         $pdf->StopTransform();
-        $pdf->SetLineWidth(0.1);
-        //cardR
+        // Right Start
+        $pdf->Image($bg2,$boxw+$ml+4.5,$row*$boxh+$mt+0.5,$bgw,$bgh); //bg
+        // Right End 
+        
     }
 
 }
