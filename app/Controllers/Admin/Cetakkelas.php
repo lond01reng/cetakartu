@@ -105,6 +105,7 @@ class Cetakkelas extends BaseController
       $pdf->SetSubject('cetaKartu');
       $pdf->SetKeywords('SMKNNgadirojo');
       $pdf->setPrintHeader(false);
+      $pdf->setPrintFooter(false);
       $pdf->SetMargins(4,4,4);
       $pdf->SetAutoPageBreak(1,5);
       $pdf->AddPage();
@@ -115,7 +116,7 @@ class Cetakkelas extends BaseController
       $bgw=87;
       $bgh=55;
       $ml = 4;
-      $mt = 8;
+      $mt = $ctk==1?4:10;
       $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
       $bg2 = base_url('uploads/'.$nota.'/bg2_'.$nota.'.jpg');
       $plong= base_url('uploads/id_plong.png');
