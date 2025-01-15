@@ -52,7 +52,6 @@ class Anggota extends BaseController
     ];
     if(!$this->validate($csvRule, $csvErr)){
       $err=session()->setFlashdata('errors', $this->validator->getErrors());
-      print_r($err);
     }else{
       if($file = $this->request->getFile('f_csv')) {
         if ($file->isValid() && ! $file->hasMoved()) {
@@ -60,11 +59,12 @@ class Anggota extends BaseController
           $file->move('../public/csvfile', $newName);
           $filePath = ("../public/csvfile/" . $newName);
 
-          $this->prosesCSV($filePath, $nota);
-
-          unlink($filePath);
-          return redirect()->to('admin/daftar_anggota/'.$nota)->with('success', 'Data berhasil diupload.');
-
+          if($this->prosesCSV($filePath, $nota)===true){
+            
+            return redirect()->to('admin/daftar_anggota/'.$nota)->with('success', 'Data berhasil diupload.');
+          }else{
+            return redirect()->to('admin/daftar_anggota/'.$nota)->with('errors', ['File CSV salah, gunakan CSV dari template.']);
+          }
         }
       }
     }
@@ -74,18 +74,28 @@ class Anggota extends BaseController
   {
     $file = fopen($filePath, "r");
     $header = fgetcsv($file, 1000, ";");
-    $ctHead = count($header);
-    $i=0;
-    $csvArr=array();
-    while(($filedata=fgetcsv($file, 1000, ";"))!== FALSE){
-      $num = count($filedata);
-      if($i>=0 && $num == $ctHead){
-        $csvArr[$i] = array_combine($header, $filedata);
-        $this->prosesCSVRow($csvArr[$i],$nota );
+
+    if(!in_array('ag_nisn',$header)){
+      unlink($filePath);
+      fclose($file);
+      return false;
+      exit();
+    }else{
+      $ctHead = count($header);
+      $i=0;
+      $csvArr=array();
+      while(($filedata=fgetcsv($file, 1000, ";"))!== FALSE){
+        $num = count($filedata);
+        if($i>=0 && $num == $ctHead){
+          $csvArr[$i] = array_combine($header, $filedata);
+          $this->prosesCSVRow($csvArr[$i],$nota );
+        }
+        $i++;
       }
-      $i++;
+      unlink($filePath);
+      fclose($file);
+      return true;
     }
-    fclose($file);
   }
 
   private function prosesCSVRow($rowData, $nota)
