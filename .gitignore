@@ -127,6 +127,7 @@ nb-configuration.xml
 /.phpunit.*.cache
 
 # proyek
+public/plugins/_*/
 public/uploads/*/
 !public/uploads/*.*
 

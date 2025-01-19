@@ -11,7 +11,7 @@ class Nota extends Migration
         $this->forge->addField([
             'nt_id'    =>  [
                 'type'           => 'INT',
-				'constraint'     => 11,
+				'constraint'     => 10,
 				'unsigned'       => true,
 				'auto_increment' => true
             ],
