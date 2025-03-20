@@ -59,8 +59,7 @@ class Anggota extends BaseController
           $file->move('../public/csvfile', $newName);
           $filePath = ("../public/csvfile/" . $newName);
 
-          if($this->prosesCSV($filePath, $nota)===true){
-            
+          if($this->prosesCSV($filePath, $nota)===true){  
             return redirect()->to('admin/daftar_anggota/'.$nota)->with('success', 'Data berhasil diupload.');
           }else{
             return redirect()->to('admin/daftar_anggota/'.$nota)->with('errors', ['File CSV salah, gunakan CSV dari template.']);

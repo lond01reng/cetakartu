@@ -11,7 +11,7 @@ class Nota extends Migration
         $this->forge->addField([
             'nt_id'    =>  [
                 'type'           => 'INT',
-				'constraint'     => 10,
+				'constraint'     => '10',
 				'unsigned'       => true,
 				'auto_increment' => true
             ],
@@ -19,14 +19,30 @@ class Nota extends Migration
                 'type'           => 'VARCHAR',
 				'constraint'     => '8',
             ],
-            'adm_cr DATETIME DEFAULT CURRENT_TIMESTAMP',
-            'adm_up DATETIME DEFAULT CURRENT_TIMESTAMP  on update current_timestamp',
-            'adm_dl' => [
+            'nt_ks' => [
+                'type'=>'varchar',
+                'constraint'     => '32',
+            ],
+            'nt_nip'=>[
+                'type'=>'varchar',
+                'constraint' => '32',
+            ],
+            'nt_tgl' => [
+                'type' => 'date',
+            ],
+            'nt_tmpl' =>[
+                'type'=>'varchar',
+                'constraint' => '32',
+            ],
+            'nt_cr DATETIME DEFAULT CURRENT_TIMESTAMP',
+            'nt_up DATETIME DEFAULT CURRENT_TIMESTAMP  on update current_timestamp',
+            'nt_dl' => [
                 'type'           => 'DATETIME',
                 'null'           => true,
             ]
         ]);
         $this->forge->addKey('nt_id', TRUE);
+        $this->forge->addForeignKey('nt_sch','ls_sekolah','sch_npsn','CASCADE','CASCADE','fk_sch'); 
         $this->forge->createTable('nota', TRUE);
     }
 

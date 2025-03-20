@@ -21,7 +21,7 @@ class LsSekolah extends Migration
             'sch_alamat'  =>  [
                 'type'           => 'VARCHAR',
 				'constraint'     => '128',
-            ]
+            ],
             'sch_cr DATETIME DEFAULT CURRENT_TIMESTAMP',
             'sch_up DATETIME DEFAULT CURRENT_TIMESTAMP  on update current_timestamp',
             'sch_dl' => [
