@@ -279,8 +279,8 @@ class Anggota extends BaseController
     foreach ($data as $row) {
       $csv_row=array(
         strval($row->ag_nisn),
-        $row->ag_nick,
         $row->ag_nama,
+        $row->ag_nick,
         $row->ag_induk,
         $row->ag_jurusan,
         (string)date('Y-m-d', strtotime($row->ag_tgl)),
