@@ -13,7 +13,7 @@ class DaftarSekolah extends BaseController
     }
     public function index()
     {
-        $data['act'] = $this->request->uri->getSegment(2);
+        $data['act'] = $this->request->getUri()->getSegment(2);;
         $data['title'] = 'Daftar Sekolah';
         $data['sch'] = $this->ls_sch->getSch();
         return view('admin/ls_sekolah', $data);

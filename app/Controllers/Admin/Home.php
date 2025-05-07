@@ -18,7 +18,7 @@ class Home extends BaseController
     public function index()
     {
         $data=[
-            'act'   => $this->request->uri->getSegment(2),
+            'act'   => $this->request->getUri()->getSegment(2),
             'title' => 'Beranda',
             'notas' => $this->nota->getNota(),
             'ct_agg' => []

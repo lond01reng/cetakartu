@@ -33,7 +33,7 @@ class Anggota extends BaseController
   public function mTambahAnggota()
   {
     $data=[
-      'nota'=>$this->request->uri->getSegment(3)
+      'nota'=>$this->request->getUri()->getSegment(3)
     ];
     return view('admin/modal_anggota', $data);
   }
