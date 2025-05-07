@@ -50,6 +50,13 @@ class AnggotaModel extends Model
         $this->where('ag_nisn',$nisn);
         return $this->withDeleted()->first();
     }
+
+    public function getNisnPublik($nisn,$tgl){
+        $this->where('ag_nisn',$nisn);
+        $this->where('ag_tgl',$tgl);
+        return $this->first();
+    }
+
     public function getJurusan($nota)
     {
         $this->select('ag_jurusan, ag_klas');

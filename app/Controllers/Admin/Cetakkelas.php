@@ -98,6 +98,11 @@ class Cetakkelas extends BaseController
 
   public function pribadiPdf($nota = null, $nisn=null, $ctk=null)
   {
+    if(empty(session()->get('name')) AND $ctk!=2){
+      return redirect()->to(base_url('/'));
+    }
+    $dt=$this->angg->cetakPribadi($nota, $nisn);
+    if(!empty($dt)){
       $pdf=$this->pdf;
       $pdf->SetCreator(PDF_CREATOR);
       $pdf->SetAuthor('kang_didikw|k-dir');
@@ -122,7 +127,7 @@ class Cetakkelas extends BaseController
       $plong= base_url('uploads/id_plong.png');
       $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
 
-      $dt=$this->angg->cetakPribadi($nota, $nisn);
+      // $dt=$this->angg->cetakPribadi($nota, $nisn);
       $nt=$this->nota->getNota1($nota);
       $tmpl=$nt->nt_tmpl; //template
 
@@ -163,6 +168,9 @@ class Cetakkelas extends BaseController
       $tipe=$ctk==1?'Cetak_':'';
       $this->response->setContentType('application/pdf');
       $pdf->Output($tipe.$nama.'_'.$sekolah.'.pdf', 'I');
+    }else{
+      return redirect()->to(base_url('/'));
+    }
   }
 
   private function ktp_id($ml,$mt,$row,$boxh,$boxw,$bgw,$bgh,$nisn,$nama,$nis,$prodi,$lahir,$ortu,$alamat1,$alamat2,$sekolah,$ks,$nip,$foto,$ttd,$tgl,$nick,$bg2, $plong){

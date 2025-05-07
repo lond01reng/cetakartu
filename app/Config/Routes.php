@@ -6,6 +6,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->post('pencarian', 'Home::cariSiswa');
+$routes->get('cetak_pdf/(:num)/(:num)/(:num)', 'Admin\Cetakkelas::pribadiPdf/$1/$2/$3');
+
 
 $routes->group('admin',['filter'=>'cekadmin'], static function($routes){
   $routes->get('beranda', 'Admin\Home::index');
