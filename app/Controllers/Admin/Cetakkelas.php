@@ -98,7 +98,7 @@ class Cetakkelas extends BaseController
 
   public function pribadiPdf($nota = null, $nisn=null, $ctk=null)
   {
-    if(empty(session()->get('name')) AND $ctk!=2){
+    if(empty(session()->get('name')) && $ctk != 2){
       return redirect()->to(base_url('/'));
     }
     $dt=$this->angg->cetakPribadi($nota, $nisn);
