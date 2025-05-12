@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-6">
           <?php if(session()->get('level')==='sup'): ?>
-            <button type="button" class="btn btn-sm btn-primary float-right" id="openModalBtn"><i class="fas fa-plus-circle"></i> Tambah Nota</button>
+            <button type="button" class="btn btn-sm btn-primary float-right" id="openModalBtn"><i class="fas fa-plus-circle"></i> Tambah Tahun Ajaran</button>
           <?php endif;?>
           </div>
         </div>

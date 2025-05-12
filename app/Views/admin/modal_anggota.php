@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myModalLabel">Import Anggota, Nota No. <?=$nota;?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -21,7 +21,7 @@
               </table>
               <button type="submit" class="btn btn-sm btn-primary float-right ml-3"><i class="fas fa-save"></i> Simpan</button>
               <button type="submit" class="btn btn-sm btn-success"><a href="<?= base_url('template/tmp_anggota.csv')?>" class="text-white"><i class="fas fa-file-csv"></i> Download Template</a></button>
-              <button type="button" class="btn btn-sm btn-danger float-right" data-dismiss="modal"><i class="fas fa-times-circle"></i> Batal</button>
+              <button type="button" class="btn btn-sm btn-danger float-right" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Batal</button>
             <?= form_close();?>
             </div>
 
