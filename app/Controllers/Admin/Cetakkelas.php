@@ -122,7 +122,8 @@ class Cetakkelas extends BaseController
       $bgh=55;
       $ml = 4;
       $mt = $ctk==1?4:10;
-      $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
+      // $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
+      $bg1 = FCPATH . 'uploads/' . $nota . '/bg1_' . $nota . '.jpg';
       $bg2 = base_url('uploads/'.$nota.'/bg2_'.$nota.'.jpg');
       $plong= base_url('uploads/id_plong.png');
       $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
