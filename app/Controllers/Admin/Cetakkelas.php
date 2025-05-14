@@ -56,10 +56,10 @@ class Cetakkelas extends BaseController
           $i++;
           $row=$i%5;
           if (file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.jpg')) {
-              $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg');
+              $foto= FCPATH . 'uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg';
           }
           elseif(file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.png')){
-              $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.png');
+              $foto= FCPATH . 'uploads/'.$nota.'/'.$dt->ag_nisn.'.png';
           }else{
               $foto='';
           }
@@ -122,7 +122,6 @@ class Cetakkelas extends BaseController
       $bgh=55;
       $ml = 4;
       $mt = $ctk==1?4:10;
-      // $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
       $bg1 = FCPATH . 'uploads/' . $nota . '/bg1_' . $nota . '.jpg';
       $bg2 = FCPATH . 'uploads/'.$nota.'/bg2_'.$nota.'.jpg';
       $plong= FCPATH . 'uploads/id_plong.png';
@@ -134,10 +133,10 @@ class Cetakkelas extends BaseController
 
       $row=0;
       if (file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.jpg')) {
-          $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg');
+          $foto= FCPATH . 'uploads/'.$nota.'/'.$dt->ag_nisn.'.jpg';
       }
       elseif(file_exists(FCPATH . 'uploads/' . $nota . '/' . $dt->ag_nisn . '.png')){
-          $foto= base_url('uploads/'.$nota.'/'.$dt->ag_nisn.'.png');
+          $foto= FCPATH . 'uploads/'.$nota.'/'.$dt->ag_nisn.'.png';
       }else{
           $foto='';
       }
