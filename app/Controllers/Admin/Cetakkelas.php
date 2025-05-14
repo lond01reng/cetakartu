@@ -40,9 +40,9 @@ class Cetakkelas extends BaseController
       $bgh=55;
       $ml = 4;
       $mt = 8; //4
-      $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
-      $bg2 = base_url('uploads/'.$nota.'/bg2_'.$nota.'.jpg');
-      $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
+      $bg1 = FCPATH . 'uploads/'.$nota.'/bg1_'.$nota.'.jpg';
+      $bg2 = FCPATH . 'uploads/'.$nota.'/bg2_'.$nota.'.jpg';
+      $ttd = FCPATH . 'uploads/'.$nota.'/stp_'.$nota.'.png';
       $plong='';
       $data=$this->angg->cetakKelas($nota, $jurs, $kls);
       
@@ -124,9 +124,9 @@ class Cetakkelas extends BaseController
       $mt = $ctk==1?4:10;
       // $bg1 = base_url('uploads/'.$nota.'/bg1_'.$nota.'.jpg');
       $bg1 = FCPATH . 'uploads/' . $nota . '/bg1_' . $nota . '.jpg';
-      $bg2 = base_url('uploads/'.$nota.'/bg2_'.$nota.'.jpg');
-      $plong= base_url('uploads/id_plong.png');
-      $ttd = base_url('uploads/'.$nota.'/stp_'.$nota.'.png');
+      $bg2 = FCPATH . 'uploads/'.$nota.'/bg2_'.$nota.'.jpg';
+      $plong= FCPATH . 'uploads/id_plong.png';
+      $ttd = FCPATH . 'uploads/'.$nota.'/stp_'.$nota.'.png';
 
       // $dt=$this->angg->cetakPribadi($nota, $nisn);
       $nt=$this->nota->getNota1($nota);
