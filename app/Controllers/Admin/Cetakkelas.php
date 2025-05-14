@@ -200,7 +200,7 @@ class Cetakkelas extends BaseController
     $pdf->SetTextColor(29,32,136);
     $pdf->Text(12,$ytext,($nama));
     $pdf->SetTextColor(0,0,0);
-    $pdf->SetFont('UbuntuL', '', 7);
+    $pdf->SetFont('ubuntulight', '', 7);
     $pdf->Text(12,$ytext+5.5,'NIS. '.$nis.', '.$prodi);
     $pdf->Text($xdt1,$ytext+9,$lahir);
     $pdf->Text($xdt1,$ytext+12,'Ortu '.$ortu);
@@ -210,12 +210,12 @@ class Cetakkelas extends BaseController
     $pdf->SetFont('Ubuntu', 'B', 7.5);
     $pdf->Text($xdt1, $ytext+31.5,$ks);
     if(!empty($nip)){
-      $pdf->SetFont('UbuntuL', '', 6.5);
+      $pdf->SetFont('ubuntulight', '', 6.5);
       $pdf->Text($xdt1, $ytext+34,'NIP. '.$nip);
     }
     $pdf->Image($foto,$ml+9,$row*$boxh+24+$mt,18,24); //foto
     $pdf->Image($ttd,$ml+23,$row*$boxh+36.5+$mt,0,12); //ttd
-    $pdf->SetFont('UbuntuL', '', 6);
+    $pdf->SetFont('ubuntulight', '', 6);
     $pdf->SetXY($ml+9,$row*$boxh+46+$mt);
     $pdf->SetFillColor(255, 240, 0);
     $pdf->Rect($ml+11,$row*$boxh+47.5+$mt,14,2,'F');

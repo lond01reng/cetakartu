@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->post('pencarian', 'Home::cariSiswa');
 $routes->get('cetak_pdf/(:num)/(:num)/(:num)', 'Admin\Cetakkelas::pribadiPdf/$1/$2/$3');
-
+$routes->get('font', 'FontController::index');
+$routes->post('font/upload', 'FontController::upload');
 
 $routes->group('admin',['filter'=>'cekadmin'], static function($routes){
   $routes->get('beranda', 'Admin\Home::index');
