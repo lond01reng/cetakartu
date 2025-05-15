@@ -56,7 +56,8 @@ class Anggota extends BaseController
       if($file = $this->request->getFile('f_csv')) {
         if ($file->isValid() && ! $file->hasMoved()) {
           $newName = $file->getRandomName();
-          $uploadPath = FCPATH . 'csvfile';
+          // $uploadPath = FCPATH . 'csvfile';
+          $uploadPath = WRITEPATH . 'uploads';
           $file->move($uploadPath, $newName);
           $filePath = ($uploadPath .'/'. $newName);
 
