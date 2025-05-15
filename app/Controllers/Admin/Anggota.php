@@ -56,8 +56,9 @@ class Anggota extends BaseController
       if($file = $this->request->getFile('f_csv')) {
         if ($file->isValid() && ! $file->hasMoved()) {
           $newName = $file->getRandomName();
-          $file->move('../public/csvfile', $newName);
-          $filePath = ("../public/csvfile/" . $newName);
+          $uploadPath = FCPATH . 'csvfile/';
+          $file->move($uploadPath, $newName);
+          $filePath = ($uploadPath . $newName);
 
           if($this->prosesCSV($filePath, $nota)===true){  
             return redirect()->to('admin/daftar_anggota/'.$nota)->with('success', 'Data berhasil diupload.');
