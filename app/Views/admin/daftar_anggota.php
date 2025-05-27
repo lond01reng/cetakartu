@@ -77,12 +77,11 @@
                   <div class="d-flex">
                   <i class="fas fa-user-edit text-info modalEdit" data-id="<?=$agg->ag_nisn;?>"></i>
                   <a <?=$actk;?>><i class="fas fa-file-pdf mx-2"></i></a>
-                  <!-- <a <?=$apdf;?>><i class="fas fa-print"></i></a> -->
                   <form action="<?= base_url('admin/status_cetak') ?>" method="post" onsubmit="return confirm('Yakin ingin mengubah status cetak <?=$agg->ag_nama;?>?')">
                       <?= csrf_field() ?>
                       <input type="hidden" name="ag_nisn" value="<?= esc($agg->ag_nisn) ?>">
                       <button type="submit" style="background:none;border:none;color:inherit;cursor:pointer;">
-                          <i class="fas fa-sync-alt <?=$agg->ag_cetak=="1"?"text-primary":"text-dark";?>"></i>
+                          <i class="fas fa-<?=$agg->ag_cetak=="1"?"print":"sync-alt";?> <?=$agg->ag_cetak=="1"?"text-primary":"text-dark";?>"></i>
                       </button>
                   </form>
                   </div>
