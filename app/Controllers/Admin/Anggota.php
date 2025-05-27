@@ -215,7 +215,7 @@ class Anggota extends BaseController
   {
     $nisn=$this->request->getPost('ag_nisn');
     $this->angg->status_cetak($nisn);
-    return redirect()->back();
+    return redirect()->to(previous_url() . '#'.$nisn);
   }
 
   public function upload_foto()
