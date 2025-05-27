@@ -28,6 +28,7 @@ $routes->group('admin',['filter'=>'cekadmin'], static function($routes){
   $routes->get('download_anggota/(:num)', 'Admin\Anggota::dlAnggota/$1');
   $routes->get('edit_biodata/(:num)', 'Admin\Anggota::edit_bio/$1');
   $routes->post('simpan_biodata/(:num)', 'Admin\Anggota::simpan_bio/$1');
+  $routes->post('status_cetak', 'Admin\Anggota::status_cetak');
 
   // $routes->get('cetak_kartu/(:num)', 'Admin\Cetakkartu::generatePdf/$1');
   // $routes->get('cetak_kartu/(:num)/(:num)', 'Admin\Cetakkartu::generatePdf/$1/$2');

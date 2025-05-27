@@ -41,6 +41,8 @@ class Home extends BaseController
           $info=$this->angg->getNisnPublik($nisn,$tgl);
           if(empty($info)){
             return redirect()->to(base_url('/'))->withInput()->with('nodata', 'Data Tidak ditemukan, ulangi pencarian!');
+          }elseif($info->ag_cetak!='1'){
+            return redirect()->to(base_url('/'))->withInput()->with('nodata', 'Kartu Belum Dicetak, Hubungi Administrator!');
           }else{
             $nisn=$info->ag_nisn;
             $nota=$info->ag_nota;

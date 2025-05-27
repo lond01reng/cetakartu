@@ -54,6 +54,7 @@ class AnggotaModel extends Model
     public function getNisnPublik($nisn,$tgl){
         $this->where('ag_nisn',$nisn);
         $this->where('ag_tgl',$tgl);
+        // $this->where('ag_cetak','1');
         return $this->first();
     }
 
@@ -97,7 +98,7 @@ class AnggotaModel extends Model
         return $this->first();
     }
 
-    public function cetakKelas($nota=null, $jur=null,$kls=null)
+    public function cetakKelas($nota=null, $jur=null, $kls=null)
     {
         $jurs=str_replace('-',' ',$jur);
         $this->orderBy('ag_jurusan','ASC');
@@ -106,5 +107,11 @@ class AnggotaModel extends Model
         $this->where('ag_jurusan', $jurs);
         $this->where('ag_klas', $kls);
         return $this->find();
+    }
+
+    public function status_cetak($nisn=null)
+    {
+        $data=['ag_cetak' => '1'];
+        return $this->update(['ag_nisn' => $nisn],$data);
     }
 }

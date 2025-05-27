@@ -75,6 +75,11 @@ class Anggota extends Migration
           'constraint'=>"'1','2','3'",
           'default'=>'1'
       ],
+      'ag_cetak'=>[
+          'type'=>'ENUM',
+          'constraint'=>"'0','1'",
+          'default'=>'0'
+      ],
       'ag_cr DATETIME DEFAULT CURRENT_TIMESTAMP',
       'ag_up DATETIME DEFAULT CURRENT_TIMESTAMP  on update current_timestamp',
       'ag_dl' => [
