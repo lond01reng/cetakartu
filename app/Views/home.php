@@ -10,7 +10,7 @@
   <?php endif ?>
   <form action="<?= base_url('pencarian'); ?>" method="POST">
   <?= csrf_field() ?>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
       <div class="col-sm-3">
         <div class="form-group">
           <label class="d-block text-left mb-n1">NISN</label>
@@ -25,15 +25,15 @@
         </div>
         <?= session('errors.tgl')?'<div class="text-sm text-danger mt-n3 mb-3 text-left">'.session('errors.tgl').'</div>':''; ?>
       </div>
+      
     </div>
-    <div class="row justify-content-center px-3">
-      <button type="submit" class="btn btn-primary w-50"><i class="fas fa-search"></i> Cari Data</button>
+    <div class="row justify-content-center">
+      <div class="col-sm-6"><button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Cari Data</button></div>
     </div>
-    <div class="row justify-content-center px-3">
+    <div class="row justify-content-center mt-3 mx-1">
     <?php if(!empty($nisn)):?>
-      <div class="info-box w-50">
+      <div class="col-sm-6 info-box w-100">
         <span class="info-box-icon bg-danger"><i class="far fa-file-pdf"></i></span>
-
         <div class="info-box-content">
           <span class="info-box-text">
           <a href="<?= base_url('cetak_pdf/'.$nota.'/'.$nisn.'/2')?>" class="btn btn-outline-danger" target="blank">Cetak Kartu PDF NISN <?=$nisn?></a>
