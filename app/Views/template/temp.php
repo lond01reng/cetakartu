@@ -17,7 +17,9 @@
   <?= $this->renderSection('css') ?>
 </head>
 
-<body class="layout-fixed sidebar-closed control-sidebar-slide-open layout-navbar-fixed sidebar-open sidebar-mini-xs accent-warning layout-footer-fixed" style="height: auto;">
+<!-- <body class="layout-fixed sidebar-closed control-sidebar-slide-open layout-navbar-fixed sidebar-open sidebar-mini-xs accent-warning layout-footer-fixed" style="height: auto;"> -->
+<body class="layout-fixed layout-navbar-fixed sidebar-mini sidebar-collapse accent-primary" style="height: auto;">
+
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">

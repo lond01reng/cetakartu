@@ -89,10 +89,10 @@
                 <td>
                 <?php
                 if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg')) {
-                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg" style="height:50px;">';
+                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg?v='.time().'" style="height:50px;" class="modalFoto" data-id="'.$agg->ag_nisn.'" data-label="'.$agg->ag_nama.'">';
                 } 
                 else if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.png')) {
-                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.png" style="height:50px">';
+                  echo '<img src="'.base_url().'uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.png?v='.time().'" style="height:50px" class="modalFoto" data-id="'.$agg->ag_nisn.'" data-label="'.$agg->ag_nama.'">';
                 }
                 else {
                   if(session()->get('level')==='sup'){
