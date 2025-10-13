@@ -112,10 +112,11 @@ class Anggota extends BaseController
 
   public function simpan_bio($nisn){
     $valRule=[
-      'bio_nama'=>'required|alpha_space|min_length[3]|max_length[100]',
+      'bio_nama'=>'required|regex_match[/^[a-zA-Z\' ]+$/]|min_length[3]|max_length[100]',
+      'bio_nick'=>'required|regex_match[/^[a-zA-Z\' ]+$/]|min_length[3]|max_length[16]',
       'bio_tempat'=>'required|alpha_space|min_length[3]|max_length[24]',
       'bio_tgl'=>'required|valid_date',
-      'bio_bapak'=>'required|alpha_space|min_length[3]|max_length[100]',
+      'bio_bapak'=>'required|regex_match[/^[a-zA-Z\' ]+$/]|min_length[3]|max_length[100]',
       'bio_rt'=>'required|numeric|max_length[2]',
       'bio_rw'=>'required|numeric|max_length[2]',
       'bio_dusun'=>'required|alpha_space|min_length[3]|max_length[24]',
@@ -125,7 +126,13 @@ class Anggota extends BaseController
     $valError=[
       'bio_nama'=>[
         'required'=> 'Nama Wajib Diisi',
-        'alpha_space' => 'Karakter Nama yang diperbolehkan hanya huruf',
+        'alpha_space' => 'Karakter Nama yang diperbolehkan hanya huruf, spasi dan petik tunggal',
+        'min_length'=> 'Minimal 3 karakter',
+        'max_length' => 'Maksimal 24 karakter'
+      ],
+      'bio_nick'=>[
+        'required'=> 'Nama Pendek Wajib Diisi',
+        'alpha_space' => 'Karakter Nama yang diperbolehkan hanya huruf, spasi dan petik tunggal',
         'min_length'=> 'Minimal 3 karakter',
         'max_length' => 'Maksimal 24 karakter'
       ],
@@ -141,7 +148,7 @@ class Anggota extends BaseController
       ],
       'bio_bapak'=>[
         'required'=> 'Nama Bapak Wajib Diisi',
-        'alpha_space' => 'Karakter Nama Bapak yang diperbolehkan hanya huruf',
+        'alpha_space' => 'Karakter Nama Bapak yang diperbolehkan hanya huruf, spasi dan petik tunggal',
         'min_length'=> 'Minimal 3 karakter',
         'max_length' => 'Maksimal 100 karakter'
       ],
@@ -180,6 +187,7 @@ class Anggota extends BaseController
       return redirect()->back();
     }else{
       $ag_nama = $this->request->getPost('bio_nama');
+      $ag_nick = $this->request->getPost('bio_nick');
       $ag_tempat=$this->request->getPost('bio_tempat');
       $ag_tgl=$this->request->getPost('bio_tgl');
       $ag_bapak=$this->request->getPost('bio_bapak');
@@ -196,6 +204,7 @@ class Anggota extends BaseController
       }
       $data=[
         'ag_nama'=>$ag_nama,
+        'ag_nick'=>$ag_nick,
         'ag_tempat'=>$ag_tempat,
         'ag_tgl'=>$ag_tgl,
         'ag_bapak'=>$ag_bapak,

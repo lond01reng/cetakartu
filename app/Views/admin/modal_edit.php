@@ -14,6 +14,7 @@
               <table class="table table-sm table-borderless">
                 <tr><td>NISN</td><td><?=$data->ag_nisn;?></td></tr>
                 <tr><td>Nama</td><td><input type="text" name="bio_nama" class="form-control" value="<?=$data->ag_nama;?>"></td></tr>
+                <tr><td>Nama Pendek</td><td><input type="text" name="bio_nick" class="form-control" value="<?=$data->ag_nick;?>"></td></tr>
                 <tr><td>Lahir</td><td>
                 <div class="d-inline">
                   <input type="text" name="bio_tempat" class="form-control w-auto d-inline" value="<?=$data->ag_tempat;?>"> <input type="date" name="bio_tgl" class="form-control w-auto d-inline" value="<?=$data->ag_tgl;?>">
