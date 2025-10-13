@@ -277,16 +277,58 @@ class Anggota extends BaseController
 
   }
 
+  // private function resize_foto($filefoto) {
+  //   if (!file_exists($filefoto)) {
+  //     throw new \Exception('File gambar tidak ditemukan: ' . $filefoto);
+  //   }
+
+  //   $image = \Config\Services::image()->withFile($filefoto);
+  //   $image->resize(500,666,true,'width');
+  //   $image->save($filefoto);
+
+  // }
   private function resize_foto($filefoto) {
     if (!file_exists($filefoto)) {
-      throw new \Exception('File gambar tidak ditemukan: ' . $filefoto);
+        throw new \Exception('File gambar tidak ditemukan: ' . $filefoto);
     }
 
-    $image = \Config\Services::image()->withFile($filefoto);
-    $image->resize(500,666,true,'width');
-    $image->save($filefoto);
+    $imageService = \Config\Services::image();
+    $image = $imageService->withFile($filefoto);
 
-  }
+    // Dapatkan ukuran asli
+    $size = getimagesize($filefoto);
+    $originalWidth = $size[0];
+    $originalHeight = $size[1];
+
+    // Ukuran target 3x4 cm dalam pixel @ 300 dpi
+    $targetWidth = 354;
+    $targetHeight = 472;
+
+    // Hitung rasio crop
+    $aspectRatioTarget = $targetWidth / $targetHeight;
+    $aspectRatioOriginal = $originalWidth / $originalHeight;
+
+    if ($aspectRatioOriginal > $aspectRatioTarget) {
+        // Gambar terlalu lebar, crop sisi kiri dan kanan
+        $newWidth = (int)($originalHeight * $aspectRatioTarget);
+        $newHeight = $originalHeight;
+        $x = (int)(($originalWidth - $newWidth) / 2);
+        $y = 0;
+    } else {
+        // Gambar terlalu tinggi, crop atas dan bawah
+        $newWidth = $originalWidth;
+        $newHeight = (int)($originalWidth / $aspectRatioTarget);
+        $x = 0;
+        $y = (int)(($originalHeight - $newHeight) / 2);
+    }
+
+    // Crop lalu resize ke target ukuran
+    $image
+        ->crop($newWidth, $newHeight, $x, $y)
+        ->resize($targetWidth, $targetHeight, false)
+        ->save($filefoto);
+}
+
   public function dlAnggota($nota){
     $data=$this->angg->getAnggota($nota);
     header('Content-Type: text/csv, charset=utf-8');
