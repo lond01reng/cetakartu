@@ -216,7 +216,8 @@ class Anggota extends BaseController
         'ag_dl'=>$ag_dl
       ];
       $this->angg->updateBio($nisn,$data);
-      return redirect()->back();
+      // return redirect()->back();
+      return redirect()->to(previous_url() . '#'.$nisn);
     }
   }
 
