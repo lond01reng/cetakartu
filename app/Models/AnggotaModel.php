@@ -114,4 +114,7 @@ class AnggotaModel extends Model
         $data=['ag_cetak' => '1'];
         return $this->update(['ag_nisn' => $nisn],$data);
     }
+    public function updateFoto($nisn){
+        return $this->where('ag_nisn', $nisn)->update();
+    }
 }
