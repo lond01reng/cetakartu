@@ -88,23 +88,23 @@
                 </td>
                 <td>
                 <?php
-                
-                if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.jpg')) {
-                  $poto='uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.jpg';
-                  $lastmod = filemtime(FCPATH.$poto);
-                  echo '<img src="'.base_url($poto).'?v='.$lastmod.'" style="height:50px;" class="modalFoto" data-id="'.$agg->ag_nisn.'" data-label="'.$agg->ag_nama.'">';
+                $poto='uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn;
+                if (file_exists(FCPATH . $poto.'.jpg')) {
+                  $lastmod = filemtime(FCPATH.$poto.'.jpg');
+                  $imgsrc=base_url($poto.'.jpg').'?v='.$lastmod;
+                  $avtr='fa-portrait text-primary';
                 } 
-                else if (file_exists(FCPATH . 'uploads/' . $agg->ag_nota . '/' . $agg->ag_nisn . '.png')) {
-                  $poto='uploads/'.$agg->ag_nota.'/'.$agg->ag_nisn.'.png';
-                  $lastmod = filemtime(FCPATH.$poto);
-                  echo '<img src="'.base_url($poto).'?v='.$lastmod.'" style="height:50px" class="modalFoto" data-id="'.$agg->ag_nisn.'" data-label="'.$agg->ag_nama.'">';
+                elseif (file_exists(FCPATH . $poto.'.png')) {
+                  $lastmod = filemtime(FCPATH.$poto.'.png');
+                  $imgsrc = base_url($poto.'.png').'?v='.$lastmod;
+                  $avtr='fa-portrait text-primary';
                 }
                 else {
-                  if(session()->get('level')==='sup'){
-                    echo '<button type="button" class="btn btn-sm btn-primary modalFoto" data-id="'.$agg->ag_nisn.'"  data-label="'.$agg->ag_nama.'"><i class="fas fa-plus-circle"></i> </button>';
-                  }
+                  $imgsrc = base_url('dist/img/no-user.jpg');
+                  $avtr='fa-plus-circle text-warning';
                 }                
                 ?>
+                <i class="modalFoto fas <?=$avtr?> fa-3x"  data-id="<?=$agg->ag_nisn?>"  data-label="<?=$agg->ag_nama?>" data-img="<?=$imgsrc?>"></i>
                 
                 </td>
                 <td><?=$agg->ag_nama; ?></td>
@@ -121,7 +121,6 @@
       </div>
     </div>
   </div>
-
 
 <?= $this->endSection() ?> 
 
@@ -150,12 +149,13 @@
     $(document).on('click','.modalFoto',function () {
       var id = $(this).data('id');  
       var label = $(this).data('label');  
+      var img = $(this).data('img');
       $.ajax({
         url: '<?= base_url('admin/upload_foto'); ?>',
         type: 'GET',
         success: function (data) {
             $('body').append(data);
-            $('#ft_id').text(label + ' ('+id+')');
+            $('#ft_id').html('<img src="'+img+'" class="w-75"/><br>'+label + ' (' + id + ')');
             $('#fotoForm').attr('action', '<?= base_url('admin/simpan_foto/'.$nt.'/'); ?>' + id);
             $('#ftModal').modal('show');
         },
@@ -176,8 +176,6 @@
         type: 'GET',
         success: function (data) {
             $('body').append(data);
-            // $('#bio_id').text('NISN '+id);
-
             $('#edModal').modal('show');
         },
         error: function () {

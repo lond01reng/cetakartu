@@ -4,14 +4,14 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="ftModalLabel">Upload</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span>&times;</span>
                 </button>
             </div>
             
             <div class="modal-body">
              
             <?= form_open_multipart('', ['id' => 'fotoForm']);?>
-              <div id="ft_id">
+              <div id="ft_id" class="text-center">
               </div>
               <input type="file" name="foto" accept="image/jpeg, image/png" required>
               <button type="submit" class="btn btn-sm btn-primary float-right ml-3"><i class="fas fa-save"></i> Simpan</button>
