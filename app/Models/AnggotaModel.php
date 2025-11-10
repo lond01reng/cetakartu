@@ -106,6 +106,7 @@ class AnggotaModel extends Model
         $this->where('ag_nota',$nota);
         $this->where('ag_jurusan', $jurs);
         $this->where('ag_klas', $kls);
+        $this->where('ag_cetak','1');
         return $this->find();
     }
 

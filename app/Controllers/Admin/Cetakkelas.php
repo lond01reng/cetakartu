@@ -47,6 +47,7 @@ class Cetakkelas extends BaseController
       $data=$this->angg->cetakKelas($nota, $jurs, $kls);
       
       $nt=$this->nota->getNota1($nota);
+      $sekolah=$nt->sch_nama;
       $tmpl=$nt->nt_tmpl;
       $i=-1;
       $row=0;
@@ -72,7 +73,7 @@ class Cetakkelas extends BaseController
           $ortu=$dt->ag_bapak;
           $alamat1='RT '.$dt->ag_rt.' RW '.$dt->ag_rw.' '.$dt->ag_dusun.' Desa '.$dt->ag_desa;
           $alamat2='Kec '.$dt->ag_kec.', '.$dt->ag_kab;
-          $sekolah=$nt->sch_nama;
+          // $sekolah=$nt->sch_nama;
           $ks=$nt->nt_ks;
           $nip=$nt->nt_nip;
           $tgl=$nt->nt_tgl;
